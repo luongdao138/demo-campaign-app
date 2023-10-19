@@ -123,6 +123,7 @@ export const CampaignProvider = ({ children }: CampaignProviderProps) => {
         break;
       case "number":
         fieldValue = Number(fieldValue);
+        break;
 
       default:
         break;

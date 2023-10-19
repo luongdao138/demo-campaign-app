@@ -15,7 +15,6 @@ import React, { FC, useState } from "react";
 import SubcampaignAdForm from "./SubcampaignAdForm";
 import { genDefaultSubCampaign, useCampaign } from "../context/CampaignContext";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { checkValidForm } from "../utils";
 
 interface SubcampaignFormProps {}
 
