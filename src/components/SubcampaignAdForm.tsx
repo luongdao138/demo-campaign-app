@@ -157,7 +157,10 @@ const SubcampaignAdForm: FC<SubcampaignAdFormProps> = ({
                       ]?.quantity?.msg
                     }
                   />
-                  <IconButton onClick={() => onRemoveSubCampaignAds(ad.id)}>
+                  <IconButton
+                    disabled={currentAds.length <= 1}
+                    onClick={() => onRemoveSubCampaignAds(ad.id)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </>
