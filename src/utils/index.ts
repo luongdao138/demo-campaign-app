@@ -83,6 +83,34 @@ export function getObjectValueWithKey(obj: any, name: string) {
   return undefined;
 }
 
-export function checkValidForm(values: any): boolean {
-  return true;
+function isObject(value: any) {
+  const type = typeof value;
+  return value != null && (type === "object" || type === "function");
 }
+
+function checkEmpty(val: any) {
+  if (!val) return true;
+  if (Array.isArray(val) && !val.length) return true;
+  if (isObject(val) && !Object.keys(val).length) return true;
+
+  return false;
+}
+
+export const checkValidForm = (values: any): boolean => {
+  if (checkEmpty(values)) return true;
+
+  if (Array.isArray(values)) {
+    return values.every((val) => checkValidForm(val));
+  }
+
+  for (const val of [...Object.values(values)]) {
+    if (isObject(val)) {
+      const isValid = checkValidForm(val);
+      if (!isValid) return false;
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+};

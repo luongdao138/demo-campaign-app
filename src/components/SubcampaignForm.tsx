@@ -15,11 +15,17 @@ import React, { FC, useState } from "react";
 import SubcampaignAdForm from "./SubcampaignAdForm";
 import { genDefaultSubCampaign, useCampaign } from "../context/CampaignContext";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { checkValidForm } from "../utils";
 
 interface SubcampaignFormProps {}
 
 const SubcampaignForm: FC<SubcampaignFormProps> = ({}) => {
-  const { formValues, setValue, register } = useCampaign();
+  const {
+    formValues,
+    setValue,
+    register,
+    formState: { errors },
+  } = useCampaign();
   const theme = useTheme();
 
   const [selectedSubCampaignId, setSelectedSubCampaignId] = useState<string>(
@@ -60,7 +66,6 @@ const SubcampaignForm: FC<SubcampaignFormProps> = ({}) => {
             const totalCampaignAds =
               sc.ads.reduce((acc, current) => acc + current.quantity, 0) ?? 0;
             const isSelected = sc.id === selectedSubCampaignId;
-
             return (
               <Card
                 onClick={() => onChangeCampaign(sc.id)}
@@ -102,6 +107,12 @@ const SubcampaignForm: FC<SubcampaignFormProps> = ({}) => {
                 label="Tên chiến dịch con *"
                 variant="standard"
                 fullWidth
+                error={
+                  !!errors?.subCampaigns?.[seletedSubCampaignIndex]?.name?.msg
+                }
+                helperText={
+                  errors?.subCampaigns?.[seletedSubCampaignIndex]?.name?.msg
+                }
                 {...register(`subCampaigns.${seletedSubCampaignIndex}.name`)}
               />
             </Grid>

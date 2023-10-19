@@ -30,7 +30,7 @@ export default function App() {
 
   const onSubmit = (values: CampaignFormState) => {
     const data = convertForm2Data(values);
-    console.log(data);
+    alert(`Thêm chiến dịch thành công: ${JSON.stringify(data)}`);
   };
 
   return (

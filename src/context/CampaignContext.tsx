@@ -109,8 +109,6 @@ export const CampaignProvider = ({ children }: CampaignProviderProps) => {
     });
   };
 
-  console.log(formErrors);
-
   const handleFieldChange = (e: any) => {
     const inputType = e.target.type;
     const fieldName = e.target.name;

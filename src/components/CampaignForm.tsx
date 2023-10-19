@@ -5,7 +5,10 @@ import { useCampaign } from "../context/CampaignContext";
 interface CampaignFormProps {}
 
 const CampaignForm: FC<CampaignFormProps> = ({}) => {
-  const { register } = useCampaign();
+  const {
+    register,
+    formState: { errors },
+  } = useCampaign();
 
   return (
     <Stack gap={4}>
@@ -13,6 +16,8 @@ const CampaignForm: FC<CampaignFormProps> = ({}) => {
         label="Tên chiến dịch *"
         variant="standard"
         fullWidth
+        error={!!errors?.name?.msg}
+        helperText={errors?.name?.msg}
         {...register("name")}
       />
       <TextField

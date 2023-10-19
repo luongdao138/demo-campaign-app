@@ -24,7 +24,12 @@ const SubcampaignAdForm: FC<SubcampaignAdFormProps> = ({
   seletedSubCampaignIndex,
 }) => {
   const [selectedAdIds, setSelectedAdIds] = useState<string[]>([]);
-  const { formValues, register, setValue } = useCampaign();
+  const {
+    formValues,
+    register,
+    setValue,
+    formState: { errors },
+  } = useCampaign();
 
   const currentAds = formValues.subCampaigns[seletedSubCampaignIndex].ads ?? [];
 
@@ -78,7 +83,11 @@ const SubcampaignAdForm: FC<SubcampaignAdFormProps> = ({
               {ad.id === "header" ? (
                 <>
                   <Checkbox
-                    checked={selectedAdIds.length === currentAds.length}
+                    disabled={currentAds.length === 0}
+                    checked={
+                      selectedAdIds.length === currentAds.length &&
+                      currentAds.length > 0
+                    }
                     onChange={(e, checked) => onSelectAll(checked)}
                   />
                   <Typography sx={{ flex: 1 }}>
@@ -117,6 +126,16 @@ const SubcampaignAdForm: FC<SubcampaignAdFormProps> = ({
                         index - 1
                       }.name`
                     )}
+                    error={
+                      !!errors?.subCampaigns?.[seletedSubCampaignIndex]?.ads?.[
+                        index - 1
+                      ]?.name?.msg
+                    }
+                    helperText={
+                      errors?.subCampaigns?.[seletedSubCampaignIndex]?.ads?.[
+                        index - 1
+                      ]?.name?.msg
+                    }
                   />
                   <TextField
                     type="number"
@@ -127,6 +146,16 @@ const SubcampaignAdForm: FC<SubcampaignAdFormProps> = ({
                         index - 1
                       }.quantity`
                     )}
+                    error={
+                      !!errors?.subCampaigns?.[seletedSubCampaignIndex]?.ads?.[
+                        index - 1
+                      ]?.quantity?.msg
+                    }
+                    helperText={
+                      errors?.subCampaigns?.[seletedSubCampaignIndex]?.ads?.[
+                        index - 1
+                      ]?.quantity?.msg
+                    }
                   />
                   <IconButton onClick={() => onRemoveSubCampaignAds(ad.id)}>
                     <DeleteIcon />
